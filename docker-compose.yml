@@ -27,8 +27,9 @@ services:
       - shared_network
     ports:
       - 4000:4000
-    # volumes:
-    #   - .:/srv/app
+    volumes:
+      - ./client:/srv/app/client
+      - ./server:/srv/app/server
 
 networks:
   shared_network:
