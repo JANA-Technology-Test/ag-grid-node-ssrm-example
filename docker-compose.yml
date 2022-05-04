@@ -1,0 +1,38 @@
+# docker stack deploy -c docker-compose.yml ssrm
+version: "3"
+
+services:
+  mysql:
+    image: bitnami/mysql
+    environment:
+      MYSQL_DATABASE: sample_data
+      MYSQL_USER: reporting_app
+      MYSQL_PASSWORD: password123
+      MYSQL_ROOT_PASSWORD: password123
+      MYSQL_AUTHENTICATION_PLUGIN: mysql_native_password
+    networks:
+      - shared_network
+    ports:
+      - 3306:3306
+    volumes:
+      - db-config:/etc/mysql
+      - db-data:/var/lib/mysql
+      - ./data/olympic_winners.sql:/docker-entrypoint-initdb.d/init.sql
+  app:
+    # build from Dockerfile
+    image: sli/ag-node-demo-app
+    depends_on:
+      - mysql
+    networks:
+      - shared_network
+    ports:
+      - 4000:4000
+    # volumes:
+    #   - .:/srv/app
+
+networks:
+  shared_network:
+
+volumes:
+  db-config:
+  db-data:
