@@ -1,6 +1,6 @@
 import mysql from 'mysql';
 
-const connection = mysql.createConnection({
+const pool = mysql.createPool({
     host: 'mysql',
     user: 'reporting_app',
     password: 'password123'
@@ -12,12 +12,20 @@ class OlympicWinnersService {
 
         const SQL = this.buildSql(request);
 
-        connection.query(SQL, (error, results) => {
-            const rowCount = this.getRowCount(request, results);
-            const resultsForPage = this.cutResultsToPageSize(request, results);
+        pool.getConnection((error, connection) => {
+            if (error && error.fatal) {
+                console.warn(error)
+            } else {
+                connection.query(SQL, (error, results) => {
+                    const rowCount = this.getRowCount(request, results);
+                    const resultsForPage = this.cutResultsToPageSize(request, results);
 
-            resultsCallback(resultsForPage, rowCount);
-        });
+                    resultsCallback(resultsForPage, rowCount);
+                })
+            }
+            connection.release()
+        })
+
     }
 
     buildSql(request) {
