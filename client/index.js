@@ -10,24 +10,32 @@ const gridOptions = {
 
     columnDefs: [
         {field: 'athlete'},
-        {field: 'country', rowGroup: true, hide: true},
-        {field: 'sport', rowGroup: true, hide: true},
+        {field: 'country'},
+        {field: 'sport', pinned: true},
         {field: 'year', filter: 'number', filterParams: {newRowsAction: 'keep'}},
-        {field: 'gold', aggFunc: 'sum'},
-        {field: 'silver', aggFunc: 'sum'},
-        {field: 'bronze', aggFunc: 'sum'},
+        {field: 'gold', filter: 'number'},
+        {field: 'silver'},
+        {field: 'bronze'},
     ],
 
     defaultColDef: {
+        enableRowGroup: true,
+        enableValue: true,
+        enablePivot: true,
         sortable: true
-    }
+    },
 
-    // debug: true,
-    // cacheBlockSize: 20,
-    // maxBlocksInCache: 3,
-    // purgeClosedRowNodes: true,
-    // maxConcurrentDatasourceRequests: 2,
-    // blockLoadDebounceMillis: 1000
+    sideBar: true,
+    rowGroupPanelShow: 'always',
+    suppressAggFuncInHeader: true,
+    rowSelection: 'multiple',
+
+    debug: true,
+    cacheBlockSize: 20,
+    maxBlocksInCache: 3,
+    purgeClosedRowNodes: true,
+    maxConcurrentDatasourceRequests: 2,
+    blockLoadDebounceMillis: 1000
 };
 
 const gridDiv = document.querySelector('#myGrid');
