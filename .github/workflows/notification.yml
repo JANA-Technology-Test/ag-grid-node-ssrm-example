@@ -22,7 +22,6 @@ jobs:
         run: |
           if [[ "${{ steps.PR.outputs.pr_title }}" == "chore(release)"* ]]; then
             echo Release PR detected
-            echo ${{ toJSON(fromJSON(steps.PR.outputs.pr)) }}
           else
             echo Action will now exit
             exit 1
