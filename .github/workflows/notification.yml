@@ -46,8 +46,8 @@ jobs:
               "pull_request": {
                 "number": ${{ env.prNumber }},
                 "html_url": "${{ env.prUrl }}",
-                "title": "MERGED to '${{ env.prBase }}' > ${{ env.prTitle }}",
-                "body": "Please allow ~15min for build to deploy.\n\n ```\n${{ env.prBody }}\n```",
+                "title": "MERGED to '${{ env.prBase }}' | ${{ env.prTitle }}",
+                "body": "Please allow ~15min for build to deploy.\n\n```${{ env.prBody }}```",
                 "updated_at": "${{ env.prCreatedAt }}"
               },
               "repository": {
