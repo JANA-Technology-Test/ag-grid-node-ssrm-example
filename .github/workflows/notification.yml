@@ -4,13 +4,10 @@ on:
   pull_request:
     types:
       - closed
-  push:
-    branches:
-      - '**'
 
 jobs:
   if_merged:
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Gather PR info
@@ -21,7 +18,7 @@ jobs:
           sha: ${{ github.event.pull_request.head.sha }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Post QA merge notification
-        if: success() && steps.PR.output.number
+        # if: success() && steps.PR.output.number
         env:
           teamsWebhook: ${{ secrets.LHT_DEV_TEAMS_WEBHOOK }}
           prNumber: ${{ steps.PR.outputs.number }}
