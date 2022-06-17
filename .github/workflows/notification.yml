@@ -34,7 +34,7 @@ jobs:
               "action": "closed",
               "pull_request": {
                 "number": ${{ env.prNumber }},
-                "html_url": "${{ env.prUrl }}"
+                "html_url": "${{ env.prUrl }}",
                 "title": "QA Merge: ${{ env.prTitle }}",
                 "body": "Please allow ~15min for build to deploy.\r\n\r\n${{ env.prBody }}",
                 "updated_at": "${{ env.prCreatedAt }}"
