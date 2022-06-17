@@ -34,10 +34,10 @@ jobs:
               "action": "closed",
               "pull_request": {
                 "number": ${ prNumber },
-                "html_url": ${ prUrl },
+                "html_url": "${ prUrl }",
                 "title": "QA Merge: ${ prTitle }",
                 "body": "Please allow ~15min for build to deploy.\r\n\r\n${ prBody }",
-                "updated_at": ${ prCreatedAt }
+                "updated_at": "${ prCreatedAt }"
               },
               "repository": {
                 "name": "test",
