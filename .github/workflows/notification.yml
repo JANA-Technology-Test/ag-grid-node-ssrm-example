@@ -1,0 +1,53 @@
+name: QA Merge Notifier
+
+on:
+  pull_request:
+    types:
+      - closed
+  push:
+    branches:
+      - '**'
+
+jobs:
+  if_merged:
+    # if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Gather PR info
+        uses: 8BitJonny/gh-get-current-pr@2.0.0
+        id: PR
+        with:
+          # Verbose setting SHA when using Pull_Request event trigger to fix #16
+          sha: ${{ github.event.pull_request.head.sha }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Post QA merge notification
+        if: success() && steps.PR.output.number
+        env:
+          teamsWebhook: ${{ secrets.LHT_DEV_TEAMS_WEBHOOK }}
+          prNumber: ${{ steps.PR.outputs.number }}
+          prTitle: ${{ steps.PR.outputs.pr_title }}
+          prBody: ${{ steps.PR.outputs.pr_body }}
+          prCreatedAt: ${{ steps.PR.outputs.pr_created_at }}
+          prUrl: ${{ steps.PR.outputs.pr_url }}
+        run: |
+          curl --location --request POST ${ teamsWebhook }
+            --header 'content-type: application/x-www-form-urlencoded'
+            --header 'x-github-event: pull_request'
+            --data-urlencode 'payload={
+              "action": "closed",
+              "pull_request": {
+                "number": ${ prNumber },
+                "html_url": ${ prUrl },
+                "title": "QA Merge: ${ prTitle }",
+                "body": "Please allow ~15min for build to deploy.\r\n\r\n${ prBody }",
+                "updated_at": ${ prCreatedAt }
+              },
+              "repository": {
+                "name": "test",
+                "full_name": "JANA-Technology-Test/test"
+              },
+              "sender": {
+                "login": "Merge Notification",
+                "avatar_url": "https://avatars.githubusercontent.com/u/34035211?v=4"
+              }
+            }'
