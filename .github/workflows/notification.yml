@@ -46,7 +46,7 @@ jobs:
                 "number": ${{ env.prNumber }},
                 "html_url": "${{ env.prUrl }}",
                 "title": "QA Merge: ${{ env.prTitle }}",
-                "body": "Please allow ~15min for build to deploy.\r\n\r\n${{ env.prBody }}",
+                "body": "Please allow ~15min for build to deploy.\n\n\n\n${{ env.prBody }}",
                 "updated_at": "${{ env.prCreatedAt }}"
               },
               "repository": {
