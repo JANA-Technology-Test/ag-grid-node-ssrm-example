@@ -30,21 +30,21 @@ jobs:
           curl --location --request POST '${{ env.teamsWebhook }}' \
             --header 'content-type: application/x-www-form-urlencoded' \
             --header 'x-github-event: pull_request' \
-            --data-urlencode 'payload={ \
-              "action": "closed", \
-              "pull_request": { \
-                "number": ${{ env.prNumber }}, \
-                "html_url": ${{ env.prUrl }}, \
-                "title": "QA Merge: ${{ env.prTitle }}", \
-                "body": "Please allow ~15min for build to deploy.\r\n\r\n${{ env.prBody }}", \
-                "updated_at": "${{ env.prCreatedAt }}" \
-              }, \
-              "repository": { \
-                "name": "test", \
-                "full_name": "JANA-Technology-Test/test" \
-              }, \
-              "sender": { \
-                "login": "Merge Notification", \
-                "avatar_url": "https://avatars.githubusercontent.com/u/34035211?v=4" \
-              } \
+            --data-urlencode 'payload={
+              "action": "closed",
+              "pull_request": {
+                "number": ${{ env.prNumber }},
+                "html_url": ${{ env.prUrl }},
+                "title": "QA Merge: ${{ env.prTitle }}",
+                "body": "Please allow ~15min for build to deploy.\r\n\r\n${{ env.prBody }}",
+                "updated_at": "${{ env.prCreatedAt }}"
+              },
+              "repository": {
+                "name": "test",
+                "full_name": "JANA-Technology-Test/test"
+              },
+              "sender": {
+                "login": "Merge Notification",
+                "avatar_url": "https://avatars.githubusercontent.com/u/34035211?v=4"
+              }
             }'
