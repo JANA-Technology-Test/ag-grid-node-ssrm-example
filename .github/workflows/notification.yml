@@ -5,6 +5,8 @@ on:
     types:
       - closed
   push:
+    branches:
+      - '**'
 
 jobs:
   if_merged:
