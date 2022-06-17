@@ -18,7 +18,7 @@ jobs:
           sha: ${{ github.event.pull_request.head.sha }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Post QA merge notification
-        # if: success() && steps.PR.output.number
+        if: success() && steps.PR.output.number
         env:
           teamsWebhook: ${{ secrets.LHT_DEV_TEAMS_WEBHOOK }}
           prNumber: ${{ steps.PR.outputs.number }}
@@ -27,7 +27,7 @@ jobs:
           prCreatedAt: ${{ steps.PR.outputs.pr_created_at }}
           prUrl: ${{ steps.PR.outputs.pr_url }}
         run: |
-          curl --location --request POST ${ teamsWebhook }
+          curl --location --request POST ${{ teamsWebhook }}
             --header 'content-type: application/x-www-form-urlencoded'
             --header 'x-github-event: pull_request'
             --data-urlencode 'payload={
