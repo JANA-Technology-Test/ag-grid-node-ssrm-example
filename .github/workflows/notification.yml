@@ -31,6 +31,7 @@ jobs:
         env:
           teamsWebhook: ${{ secrets.LHT_DEV_TEAMS_WEBHOOK }}
           prJSON: ${{ toJSON(fromJSON(steps.current_pr.outputs.pr)) }}
+          prBase: ${{ fromJSON(steps.PR.outputs.pr).base.ref }}
           prNumber: ${{ steps.PR.outputs.number }}
           prTitle: ${{ steps.PR.outputs.pr_title }}
           prBody: ${{ steps.PR.outputs.pr_body }}
@@ -45,7 +46,7 @@ jobs:
               "pull_request": {
                 "number": ${{ env.prNumber }},
                 "html_url": "${{ env.prUrl }}",
-                "title": "${{ fromJSON(steps.PR.outputs.pr).base.ref }} Merge: ${{ env.prTitle }}",
+                "title": "${{ env.prBase }} Merge: ${{ env.prTitle }}",
                 "body": "Please allow ~15min for build to deploy.\n ${{ env.prBody }}",
                 "updated_at": "${{ env.prCreatedAt }}"
               },
