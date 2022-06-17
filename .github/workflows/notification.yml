@@ -4,7 +4,8 @@ on:
   pull_request:
     types:
       - closed
-  push: dev
+  push:
+    branches: dev
 
 jobs:
   if_merged:
