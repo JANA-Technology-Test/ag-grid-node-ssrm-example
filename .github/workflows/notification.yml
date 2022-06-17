@@ -27,7 +27,7 @@ jobs:
           prBody: ${{ steps.PR.outputs.pr_body }}
           prCreatedAt: ${{ steps.PR.outputs.pr_created_at }}
           prUrl: ${{ steps.PR.outputs.pr_url }}
-        run: >
+        run: >-
           curl --location --request POST '${{ env.teamsWebhook }}'
             --header 'content-type: application/x-www-form-urlencoded'
             --header 'x-github-event: pull_request'
@@ -35,7 +35,7 @@ jobs:
               "action": "closed",
               "pull_request": {
                 "number": ${{ env.prNumber }},
-                "html_url": "${{ env.prUrl }}",
+                "html_url": ${{ env.prUrl }},
                 "title": "QA Merge: ${{ env.prTitle }}",
                 "body": "Please allow ~15min for build to deploy.\r\n\r\n${{ env.prBody }}",
                 "updated_at": "${{ env.prCreatedAt }}"
