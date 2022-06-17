@@ -17,16 +17,8 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           # Verbose setting SHA when using Pull_Request event trigger to fix #16
           sha: ${{ github.event.pull_request.head.sha }}
-      - name: Check if relevant PR
-        if: success()
-        run: |
-          if [[ "${{ steps.PR.outputs.pr_title }}" == "chore(release)"* ]]; then
-            echo IsRelease
-          else
-            exit 1
-          fi
       - name: Post QA merge notification
-        if: success()
+        if: success() && "${{ steps.PR.outputs.pr_title }}" == "chore(release)"*
         env:
           teamsWebhook: ${{ secrets.LHT_DEV_TEAMS_WEBHOOK }}
           prNumber: ${{ steps.PR.outputs.number }}
