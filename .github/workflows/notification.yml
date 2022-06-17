@@ -18,7 +18,7 @@ jobs:
           sha: ${{ github.event.pull_request.head.sha }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Post QA merge notification
-        if: success() && steps.PR.output.number
+        if: success()
         env:
           teamsWebhook: ${{ secrets.LHT_DEV_TEAMS_WEBHOOK }}
           prNumber: ${{ steps.PR.outputs.number }}
