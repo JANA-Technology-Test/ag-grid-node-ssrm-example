@@ -23,7 +23,7 @@ jobs:
           if [[ ${{ steps.PR.outputs.pr_title }} == "chore(release)"* ]]; then
             echo IsRelease
           else
-            return 1
+            exit 1
           fi
       - name: Post QA merge notification
         if: success()
