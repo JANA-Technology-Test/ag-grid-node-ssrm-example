@@ -20,7 +20,7 @@ jobs:
       - name: Check if relevant PR
         if: success()
         run: |
-          if [[ ${{ steps.PR.outputs.pr_title }} == "chore(release)"* ]]; then
+          if [[ "${{ steps.PR.outputs.pr_title }}" == "chore(release)"* ]]; then
             echo IsRelease
           else
             exit 1
